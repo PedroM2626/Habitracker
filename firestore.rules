@@ -1,0 +1,43 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // Users collection - private data, only accessible by the owner
+    match /users/{userId} {
+      allow read, write: if request.auth != null && request.auth.uid == userId;
+    }
+    
+    // Habits collection - private data, only accessible by the owner
+    match /habits/{habitId} {
+      allow read, write: if request.auth != null && request.auth.uid == resource.data.userId;
+      allow create: if request.auth != null && request.auth.uid == request.resource.data.userId;
+    }
+    
+    // Habit completions collection - private data, only accessible by the owner
+    match /habit_completions/{completionId} {
+      allow read, write: if request.auth != null && request.auth.uid == resource.data.userId;
+      allow create: if request.auth != null && request.auth.uid == request.resource.data.userId;
+    }
+    
+    // Achievements collection - private data, only accessible by the owner
+    match /achievements/{achievementId} {
+      allow read, write: if request.auth != null && request.auth.uid == resource.data.userId;
+      allow create: if request.auth != null && request.auth.uid == request.resource.data.userId;
+    }
+    
+    // User statistics collection - private data, only accessible by the owner
+    match /user_stats/{userId} {
+      allow read, write: if request.auth != null && request.auth.uid == userId;
+    }
+    
+    // Global leaderboards - read-only for authenticated users
+    match /leaderboards/{leaderboardId} {
+      allow read: if request.auth != null;
+    }
+    
+    // App settings/metadata - public read access
+    match /app_metadata/{document} {
+      allow read: if true;
+    }
+  }
+}

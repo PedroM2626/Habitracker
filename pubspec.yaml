@@ -1,0 +1,31 @@
+name: hbitolar
+description: "Habitracker é o seu parceiro diário para construir e manter hábitos saudáveis, transformando a jornada de autodesenvolvimento em uma experiência recompensadora e divertida."
+publish_to: "none"
+version: 1.0.0
+
+environment:
+  sdk: ^3.6.0
+
+dependencies:
+  flutter:
+    sdk: flutter
+  cupertino_icons: ^1.0.8
+  google_fonts: ^6.1.0
+  firebase_core: ^4.0.0
+  firebase_auth: '>=5.3.3'
+  cloud_firestore: '>=5.5.0'
+  firebase_storage: ^13.0.0
+  google_sign_in: '>=6.2.1'
+  provider: ^6.0.0
+  image_picker: '>=1.1.2'
+  shared_preferences: ^2.0.0
+  fl_chart: 0.68.0
+  flutter_local_notifications: ^19.0.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^5.0.0
+
+flutter:
+  uses-material-design: true

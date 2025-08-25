@@ -1,0 +1,25 @@
+rules_version = '2';
+service firebase.storage {
+  match /b/{bucket}/o {
+    
+    // Profile images - users can only access their own profile images
+    match /profile_images/{userId}.jpg {
+      allow read, write: if request.auth != null && request.auth.uid == userId;
+    }
+    
+    // Achievement images - users can only access their own achievement images
+    match /achievement_images/{userId}/{imageId} {
+      allow read, write: if request.auth != null && request.auth.uid == userId;
+    }
+    
+    // Habit images - users can only access their own habit images
+    match /habit_images/{userId}/{imageId} {
+      allow read, write: if request.auth != null && request.auth.uid == userId;
+    }
+    
+    // App assets - public read access
+    match /app_assets/{allPaths=**} {
+      allow read: if true;
+    }
+  }
+}
