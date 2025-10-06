@@ -2,6 +2,7 @@
 /// 
 /// This file documents the structure of collections and documents in Firestore
 /// for the Habitracker application.
+library;
 
 class FirestoreSchema {
   // Collection names

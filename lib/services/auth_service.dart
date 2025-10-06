@@ -1,12 +1,17 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:hbitolar/models/user_model.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:hbitolar/services/firestore_service.dart';
 
 class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
-  final GoogleSignIn _googleSignIn = GoogleSignIn();
+  final GoogleSignIn _googleSignIn = GoogleSignIn.instance;
   final FirestoreService _firestoreService = FirestoreService();
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+
+  AuthService() {
+  }
 
   User? get currentUser => _auth.currentUser;
   Stream<User?> get authStateChanges => _auth.authStateChanges();
@@ -46,34 +51,37 @@ class AuthService {
   Future<UserCredential?> signInWithGoogle() async {
     try {
       final GoogleSignInAccount? googleUser = await _googleSignIn.signIn();
-      if (googleUser == null) return null;
+
+      if (googleUser == null) {
+        return null;
+      }
 
       final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
+      final authorization = await googleUser.authorizationClient?.authorizationForScopes(['email']);
+
       final credential = GoogleAuthProvider.credential(
-        accessToken: googleAuth.accessToken,
+        accessToken: authorization?.accessToken,
         idToken: googleAuth.idToken,
       );
 
-      final userCredential = await _auth.signInWithCredential(credential);
-      
+      UserCredential userCredential = await _auth.signInWithCredential(credential);
+
+      // Create user in Firestore if it doesn't exist
       if (userCredential.user != null) {
-        final existingUser = await _firestoreService.getUser(userCredential.user!.uid);
-        if (existingUser == null) {
-          final userModel = UserModel(
-            uid: userCredential.user!.uid,
-            email: userCredential.user!.email ?? '',
-            name: userCredential.user!.displayName ?? '',
-            photoUrl: userCredential.user!.photoURL,
-            createdAt: DateTime.now(),
-            updatedAt: DateTime.now(),
-          );
-          await _firestoreService.createUser(userModel);
+        DocumentSnapshot userDoc = await _firestore.collection('users').doc(userCredential.user!.uid).get();
+        if (!userDoc.exists) {
+          await _firestore.collection('users').doc(userCredential.user!.uid).set({
+            'uid': userCredential.user!.uid,
+            'email': userCredential.user!.email,
+            'displayName': userCredential.user!.displayName,
+            'photoURL': userCredential.user!.photoURL,
+          });
         }
       }
-      
       return userCredential;
     } catch (e) {
-      throw Exception('Erro ao fazer login com Google: $e');
+      print(e);
+      return null;
     }
   }
 

@@ -243,7 +243,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           height: 40,
                           color: Theme.of(context).colorScheme.primary.withValues(alpha: 0.3),
                         ),
-                        _buildStatColumn('Hábitos', '${(context.watch<AuthProvider>().currentUser?.totalXp ?? 0) > 0 ? 'Ativo' : 'Inativo'}'),
+                        _buildStatColumn('Hábitos', (context.watch<AuthProvider>().currentUser?.totalXp ?? 0) > 0 ? 'Ativo' : 'Inativo'),
                       ],
                     ),
                   ),

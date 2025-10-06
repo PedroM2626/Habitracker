@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:hbitolar/models/habit_completion_model.dart';
 import 'package:hbitolar/models/habit_model.dart';
 import 'package:hbitolar/models/user_model.dart';
@@ -6,7 +5,7 @@ import 'package:hbitolar/repositories/user_repository.dart';
 import 'package:hbitolar/repositories/habits_repository.dart';
 
 class FirestoreService {
-  final FirebaseFirestore _db = FirebaseFirestore.instance;
+
   final UserRepository _userRepository = UserRepository();
   final HabitsRepository _habitsRepository = HabitsRepository();
 

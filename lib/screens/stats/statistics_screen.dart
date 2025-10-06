@@ -79,7 +79,6 @@ class _StatisticsScreenState extends State<StatisticsScreen> {
                         final habits = habitsProvider.habits;
                         final completedToday = habits.where((h) => habitsProvider.isHabitCompletedToday(h.id)).length;
                         final totalHabits = habits.length;
-                        final averageCompletion = totalHabits > 0 ? (completedToday / totalHabits * 100).round() : 0;
                         
                         return Row(
                           children: [

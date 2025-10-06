@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:hbitolar/models/user_model.dart';
 import 'package:hbitolar/repositories/base_repository.dart';
 import 'package:hbitolar/firestore/firestore_data_schema.dart';

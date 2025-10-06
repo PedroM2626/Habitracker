@@ -130,3 +130,31 @@ Este projeto está licenciado sob a licença MIT - veja o arquivo [LICENSE](LICE
 ## ✉️ Contato
 
 Feito por Pedro Morato Lahoz - pedromoratolahoz@gmail.com
+
+## 🐳 Executando com Docker
+
+Para executar o projeto usando Docker, siga os passos abaixo:
+
+1.  **Construa a imagem Docker**
+    ```bash
+    docker build -t habitracker-app .
+    ```
+
+2.  **Execute o contêiner Docker**
+    ```bash
+    docker run -p 5037:5037 -v "$(pwd)":/app habitracker-app
+    ```
+
+    Isso iniciará o aplicativo Flutter dentro de um contêiner Docker. O volume montado (`-v "$(pwd)":/app`) permite que as alterações no seu código local sejam refletidas dentro do contêiner.
+
+    Se você estiver no Windows e usando PowerShell, o comando para montar o volume pode precisar ser ajustado para:
+    ```bash
+    docker run -p 5037:5037 -v "${PWD}":/app habitracker-app
+    ```
+
+    Ou, se estiver usando Git Bash/MinGW:
+    ```bash
+    docker run -p 5037:5037 -v "$(pwd)":/app habitracker-app
+    ```
+
+    O aplicativo será executado no modo de depuração e você poderá acessá-lo através do seu navegador ou emulador/dispositivo conectado, dependendo da configuração do Flutter. O comando `flutter run` dentro do Docker irá detectar automaticamente os dispositivos disponíveis.

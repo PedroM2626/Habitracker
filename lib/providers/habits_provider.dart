@@ -7,8 +7,8 @@ class HabitsProvider with ChangeNotifier {
   final FirestoreService _firestoreService = FirestoreService();
   
   List<HabitModel> _habits = [];
-  Map<String, HabitCompletionModel> _todayCompletions = {};
-  Map<String, int> _streaks = {};
+  final Map<String, HabitCompletionModel> _todayCompletions = {};
+  final Map<String, int> _streaks = {};
   bool _isLoading = false;
   String? _error;
 

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:hbitolar/providers/auth_provider.dart';
 import 'package:hbitolar/providers/habits_provider.dart';
-import 'package:hbitolar/models/habit_model.dart';
+
 import 'package:hbitolar/widgets/habit_card.dart';
 
 class HabitsListScreen extends StatelessWidget {

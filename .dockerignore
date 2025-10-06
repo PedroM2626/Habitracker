@@ -1,0 +1,13 @@
+Dockerfile
+.git
+.idea
+.vscode
+build
+.flutter-plugins
+.flutter-plugins-dependencies
+.packages
+.dart_tool
+.gradle
+.metadata
+*.iml
+*.lock
